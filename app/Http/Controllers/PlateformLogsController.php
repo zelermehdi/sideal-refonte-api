@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class PlateformLogsController extends Controller
 {
 
-    public function getPlatformLogs() {
+    public function getPlateformLogs() {
         // Récupérer tous les messages de la Base de données
         // Convertir les objets messages en JSON et les sérialiser
         $logs=plateformlogs::all();

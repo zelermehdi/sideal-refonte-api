@@ -25,7 +25,7 @@ use App\Http\Controllers\ActivitiesController;
     return $request->user();
 });
 
-Route::get('/platformlogs', [PlateformLogsController::class, 'getPlatformLogs']);
+Route::get('/plateformlogs', [PlateformLogsController::class, 'getPlateformLogs']);
 Route::get('/activities', [ActivitiesController::class, 'getActivities']);
 
 
