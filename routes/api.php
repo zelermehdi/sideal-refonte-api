@@ -18,11 +18,11 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 */
 
 
-    Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-     return $request->user();
-    });
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
-    Route::get('/plateformlogs', [PlateformLogsController::class, 'getPlateformLogs']);
-    Route::get('/activities', [ActivitiesController::class, 'getActivities']);
+    return $request->user();
+});
 
-    Route::post('register', [RegisteredUserController::class, 'store']);
+Route::get('/plateformlogs', [PlateformLogsController::class, 'getPlateformLogs']);
+Route::get('/activities', [ActivitiesController::class, 'getActivities']);
+

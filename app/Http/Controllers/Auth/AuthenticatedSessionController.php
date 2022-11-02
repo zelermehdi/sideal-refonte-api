@@ -1,15 +1,17 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-use Illuminate\Support\Facades\Hash;
+
+use App\Models\user;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use App\Providers\RouteServiceProvider;
 use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Support\Facades\Validator;
-use App\Models\user;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 
 class AuthenticatedSessionController extends Controller
@@ -21,15 +23,6 @@ class AuthenticatedSessionController extends Controller
      */
     public function create()
     {
-
-
-
-
-
-
-
-
-
     }
 
     /**
@@ -40,48 +33,48 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
-      
-        $validator = Validator::make($request->all(),[
 
-            'email'=>'required',
+        $validator = Validator::make($request->all(), [
+
+            'email' => 'required',
             'password' => 'required',
-        
-          ]);
-          
-          if($validator->fails())
-          {
-            return response()->json([
-                'validation_errors' =>$validator,
-            ]);
-          }else{
-            $users = user::where('email',$request->email)->first();
-            if(!$users || ! Hash::check($request->password,$users->password)){
-                return response()->json([
-                    'status' =>401,
-                    'message'=>'invalid credentials',
-                ]);
-        
-        
-        
-            }
-            else{
-                $token=$users->createToken($users->email. '_token')->plainTextToken;
-        
-        return response()->json([
-            'status' =>200,
-            'email'=>$users->email,
-            'token'=>$token,
-            'message'=>'registered successfully',
+
+
         ]);
-        
-        
-        
+
+        if ($validator->fails()) {
+            return response()->json([
+                'validation_errors' => $validator,
+            ]);
+        } else {
+            $users = user::where('email', $request->email)->first();
+
+
+            if (!$users || !Hash::check($request->password, $users->password)) {
+                return response()->json([
+                    'status' => 401,
+                    'message' => ' e-mail ou mot de passe incorrect',
+                ]);
+            } else {
+
+
+
+
+                if ($users->role === 1) {
+                    $role = 'admin';
+                    $token = $users->createToken($users->email . '_AdminToken')->plainTextToken;
+                } else {
+                    $role = '';
+                    $token = $users->createToken($users->email . '_token')->plainTextToken;
+                }
+                return response()->json([
+                    'status' => 200,
+                    "user" => $users,
+                    'token' => $token,
+                    'role' => $role,
+                    'message' => 'registered successfully',
+                ]);
             }
-          
-        
-        
-        
-        
         }
     }
 
@@ -93,20 +86,13 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request)
     {
-        Auth::guard('web')->logout();
+        // Auth::guard('web')->logout();
 
-        $request->session()->invalidate();
+        // $request->session()->invalidate();
 
-        $request->session()->regenerateToken();
+        // $request->session()->regenerateToken();
 
-        return redirect('/');
+        // return redirect('/');
+
     }
-
-
-
-    public function register(request $request){
-        
-    }
-
-
 }

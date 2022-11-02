@@ -17,8 +17,7 @@ class membersFactory extends Factory
         return [
              'first_name' =>$this->faker->name(),
              'last_name' =>$this->faker->name(),
-             'birthdate' => $this->faker->dateTimeBetween($startDate = '-30 years', $endDate = 'now', $timezone = null) // DateTime('2003-03-15 02:00:49', 'Africa/Lagos')
-             ,
+             'birthdate' => $this->faker->dateTimeBetween($startDate = '-30 years', $endDate = 'now', $timezone = null) ,
              'phone' =>$this->faker->phoneNumber (),
              'adresse' =>$this->faker->streetAddress(),
              'city' =>$this->faker-> state (),
@@ -27,6 +26,7 @@ class membersFactory extends Factory
              'is_sideal' =>$this->faker->boolean   (),
              'is_adult' =>  $this->faker->boolean(),
             'email' => $this->faker->unique()->safeEmail(),
+            'user_id' => $this->faker->unique(),
     
         ];
     }

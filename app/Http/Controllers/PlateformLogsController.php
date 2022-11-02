@@ -17,3 +17,7 @@ class PlateformLogsController extends Controller
         return $logs->toJson();
     }
 }
+
+
+
+
