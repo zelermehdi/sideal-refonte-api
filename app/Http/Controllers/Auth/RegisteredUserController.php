@@ -38,9 +38,10 @@ class RegisteredUserController extends Controller
     $validator = Validator::make($request->all(), [
       'first_name' => 'required',
       'last_name' => 'required',
-      'birthdate' => 'required',
-      'phone' => 'required',
-      'email' => 'required',
+      'birthdate' => 'date_format:Y-m-d|before:today|nullable',
+
+      'phone' =>  'required|numeric|digits:10',
+      'email' => 'required|email|unique:users',
       'adresse' => 'required',
       'city' => 'required',
       'code_postal' => 'required',
@@ -51,16 +52,18 @@ class RegisteredUserController extends Controller
       'password' => 'required|min:8',
 
     ]);
+
     if ($validator->fails()) {
       return response()->json([
-        'validation_errors' => $validator,
+        'validation_errors' => $validator->errors(),
+
       ]);
     } else {
-
       $members = user::create([
         'email' => $request->email,
         'password' => Hash::make($request->password),
       ]);
+
       members::create([
         'first_name' => $request->first_name,
         'last_name' => $request->last_name,
@@ -71,10 +74,6 @@ class RegisteredUserController extends Controller
         'code_postal' => $request->code_postal,
         'email' => $request->email,
         'user_id' => $members->id,
-        // 'currently_active'=>$request->currently_active,
-        // 'is_sideal'=>$request->is_sideal,
-        // 'is_adult'=>$request->is_adult,
-
       ]);
 
 
