@@ -56,10 +56,6 @@ class AuthenticatedSessionController extends Controller
                     'message' => ' e-mail ou mot de passe incorrect',
                 ]);
             } else {
-
-
-
-
                 if ($users->role === 1) {
                     $role = 'admin';
                     $token = $users->createToken($users->email . '_AdminToken')->plainTextToken;
@@ -86,13 +82,20 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request)
     {
-        // Auth::guard('web')->logout();
+        //  Auth::guard('web')->logout();
 
-        // $request->session()->invalidate();
+        //  $request->session()->invalidate();
 
         // $request->session()->regenerateToken();
+        // $request->user()->tokens()->delete();
 
-        // return redirect('/');
+         return response()->json([
+            'status' =>200,
+            'message' =>'vous vous êtes déconnecté de votre compte avec succès '
+         ]);
+
+
+       
 
     }
 }

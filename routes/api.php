@@ -23,6 +23,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::middleware('auth:sanctum')->post('/logout', function (Request $request) {
+
+     $request->user()->tokens()->delete();
+
+    return response()->json([
+        'status' =>200,
+        'message' =>'vous vous êtes déconnecté de votre compte via lapi'
+     ]);
+});
+
 Route::get('/plateformlogs', [PlateformLogsController::class, 'getPlateformLogs']);
 Route::get('/activities', [ActivitiesController::class, 'getActivities']);
+
 
