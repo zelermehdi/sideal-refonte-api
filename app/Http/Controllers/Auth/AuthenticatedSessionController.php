@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Providers\RouteServiceProvider;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\members;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -33,45 +34,39 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
-
+        // Check the form has been correctly filled
         $validator = Validator::make($request->all(), [
-
             'email' => 'required',
             'password' => 'required',
-
-
         ]);
-
         if ($validator->fails()) {
             return response()->json([
                 'validation_errors' => $validator,
             ]);
-        } else {
-            $users = user::where('email', $request->email)->first();
-
-
-            if (!$users || !Hash::check($request->password, $users->password)) {
-                return response()->json([
-                    'status' => 401,
-                    'message' => ' e-mail ou mot de passe incorrect',
-                ]);
-            } else {
-                if ($users->role === 1) {
-                    $role = 'admin';
-                    $token = $users->createToken($users->email . '_AdminToken')->plainTextToken;
-                } else {
-                    $role = '';
-                    $token = $users->createToken($users->email . '_token')->plainTextToken;
-                }
-                return response()->json([
-                    'status' => 200,
-                    "user" => $users,
-                    'token' => $token,
-                    'role' => $role,
-                    'message' => 'registered successfully',
-                ]);
-            }
         }
+
+        // If data are OK, check if a user with this email exists already
+        $user = User::where('email', $request->email)->with(['members'=> function($q) {
+            $q->where('currently_active', true);
+        }])->first();
+
+        // Check if we found a user and password matches
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            return response()->json([
+                'status' => 401,
+                'message' => ' e-mail ou mot de passe incorrect',
+            ]);
+        }
+
+        // Generate the unique session token
+        $token = $user->createToken($user->email . '_token')->plainTextToken;
+
+        return response()->json([
+            'status' => 200,
+            "user" => $user,
+            'token' => $token,
+            'message' => 'Connexion réussie',
+        ]);
     }
 
     /**

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ActivitiesController;
 use App\Http\Controllers\PlateformLogsController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,5 +36,6 @@ Route::middleware('auth:sanctum')->post('/logout', function (Request $request) {
 
 Route::get('/plateformlogs', [PlateformLogsController::class, 'getPlateformLogs']);
 Route::get('/activities', [ActivitiesController::class, 'getActivities']);
+// route::get ('/members', [AuthenticatedSessionController::class, 'getMembers']);
 
 
