@@ -15,6 +15,5 @@ class activitiesController extends Controller
         $activity = Activities::all();
         // Retourner une réponse HTTP contenant nos objets sérialisés
         return $activity->toJson();
-        dd($activity);
     }
 }

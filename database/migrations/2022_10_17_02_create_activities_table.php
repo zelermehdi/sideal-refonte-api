@@ -27,6 +27,7 @@ class CreateActivitiesTable extends Migration
             $table->float('kid_sideal_value');
             $table->float('kid_out_sideal_value');
             $table->string('day');
+            $table->integer('type');
             $table->time('starts_at');
             $table->time('ends_at');
             $table->timestamps();

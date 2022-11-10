@@ -20,13 +20,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::factory(5)->create();
-        PlateformLogs::factory(5)->create();
-        members::factory(5)->create();
-    my_bookings::factory(5)->create();
-    activities::factory(5)->create();
-    credits::factory(5)->create();
-session::factory(5)->create();
+    //     User::factory(5)->create();
+        // PlateformLogs::factory(5)->create();
+    //     members::factory(5)->create();
+    // my_bookings::factory(5)->create();
+   
+//     credits::factory(5)->create();
+ activities::factory(5)->create();
+
+// session::factory(5)->create();
         
     }
 }

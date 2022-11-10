@@ -28,6 +28,8 @@ class activitiesFactory extends Factory
             'day' =>$this->faker->  dayOfWeek(),
             'starts_at' =>$this->faker-> time($format = 'H:i') ,
             'ends_at' =>$this->faker-> time($format = 'H:i'),
+            'credit_id' =>  1,
+            'type'=> 0
 
         ];
     }

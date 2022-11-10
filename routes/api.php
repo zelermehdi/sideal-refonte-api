@@ -36,6 +36,5 @@ Route::middleware('auth:sanctum')->post('/logout', function (Request $request) {
 
 Route::get('/plateformlogs', [PlateformLogsController::class, 'getPlateformLogs']);
 Route::get('/activities', [ActivitiesController::class, 'getActivities']);
-// route::get ('/members', [AuthenticatedSessionController::class, 'getMembers']);
 
 
