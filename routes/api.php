@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\activities;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ActivitiesController;
@@ -36,5 +37,11 @@ Route::middleware('auth:sanctum')->post('/logout', function (Request $request) {
 
 Route::get('/plateformlogs', [PlateformLogsController::class, 'getPlateformLogs']);
 Route::get('/activities', [ActivitiesController::class, 'getActivities']);
+Route::get('/unique',[ActivitiesController::class, 'getUnique']);
+Route::get('/annuel',[ActivitiesController::class, 'getAnnuel']);
+Route::get('/ponctuel',[ActivitiesController::class, 'getPonctuel']);
+route::post('/create',[ActivitiesController::class, 'Store']);
+
+
 
 
