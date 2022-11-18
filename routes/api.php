@@ -36,10 +36,8 @@ Route::middleware('auth:sanctum')->post('/logout', function (Request $request) {
 });
 
 Route::get('/plateformlogs', [PlateformLogsController::class, 'getPlateformLogs']);
-Route::get('/activities', [ActivitiesController::class, 'getActivities']);
-Route::get('/unique',[ActivitiesController::class, 'getUnique']);
-Route::get('/annuel',[ActivitiesController::class, 'getAnnuel']);
-Route::get('/ponctuel',[ActivitiesController::class, 'getPonctuel']);
+// creation d'une route pour afficher les activities avec un type en parametre
+Route::get('/activities/{type}', [ActivitiesController::class, 'getActivities']);
 route::post('/create',[ActivitiesController::class, 'Store']);
 
 

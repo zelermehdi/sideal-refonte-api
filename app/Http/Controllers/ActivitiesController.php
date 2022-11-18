@@ -11,31 +11,16 @@ use Illuminate\Support\Facades\Validator;
 
 class activitiesController extends Controller
 {
-    public function getActivities()
+    public function getActivities($type)
     {
-        // Récupérer tous les messages de la Base de données
-        // Convertir les objets messages en JSON et les sérialiser
-        $activity = Activities::all();
+        //dans notre function ya un parametre type 
+     //dans cette request prepare, on cherche le champs type dans la table activities  qui aura un parametre type qui correspond à une activité 
+        $activity = Activities::where('type', $type)->get();
         // Retourner une réponse HTTP contenant nos objets sérialisés
         return $activity->toJson();
     }
 
-    public function getUnique()
-    {
-        $unique = Activities::where('type', 1)->get();
-        return $unique->toJson();
-    }
-    public function getAnnuel()
-    {
-        $unique = Activities::where('type', 0)->get();
-        return $unique->toJson();
-    }
-
-    public function getPonctuel()
-    {
-        $unique = Activities::where('type', 2)->get();
-        return $unique->toJson();
-    }
+  
 
     public function Store(Request $request)
 
